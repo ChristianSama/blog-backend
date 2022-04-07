@@ -1,26 +1,38 @@
+import { PrismaClient } from "@prisma/client";
 import express from "express";
-import path from 'path';
-import fs from "fs";
 
+const prisma = new PrismaClient();
 const app = express();
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
+//GET - /posts
+app.get('/posts', async (req, res) => {
+  const post = await prisma.post.findMany(); 
+  res.json(post);
+})
 
-app.get("/posts", (req, res) => {
-  fs.readFile(path.join(__dirname, "../db/db.json"), (err, data) => {
-    if (err) throw err;
-  let users = JSON.parse(data.toString());
-  res.json(users); 
-  });
-});
+//GET - /post/:id
+app.get('/post/:id', async (req, res) => {
+  const id = req.params.id
 
-let port = process.env.PORT;
-if (port == null || port == "") {
-  port = new Number(5000).toString();
-}
+  const post = await prisma.post.findUnique( {
+    where: {id: Number(id)},
+  }); 
 
-app.listen(port, () => {
-  console.log("Server listening on port " + port);
-});
+  res.json(post);
+})
+
+//POST - /posts
+app.post('/posts', async (req, res) => {
+  const {title, content, authorEmail} = req.body;
+
+})
+
+//GET - /users
+app.get('/users', async (req, res) => {
+  const users = await prisma.user.findMany();
+  res.json(users);
+})
+
+const server = app.listen(3000, () => {
+  console.log('Server listening on port 3000')
+})
