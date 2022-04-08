@@ -61,12 +61,26 @@ app.delete("/posts/:id", async (req, res) => {
   res.json(req.params.id);
 });
 
-//GET - /users
+//Get users
 app.get("/users", async (req, res) => {
-  const users = await prisma.user.findMany();
-  res.json(users);
+  const search = req.query.search as string;
+
+  let filteredUsers = await prisma.user.findMany({
+    orderBy: { name: "asc" },
+    where: {
+      name: {
+        startsWith: search,
+        mode: 'insensitive', //make filtering case-insensitive
+      },
+    },
+  });
+  res.json({
+    result: filteredUsers,
+    count: filteredUsers.length
+  });
 });
 
+//Start Server
 const server = app.listen(3000, () => {
   console.log("Server listening on port 3000");
 });
