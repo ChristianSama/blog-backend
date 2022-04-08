@@ -4,14 +4,17 @@ import express from "express";
 const prisma = new PrismaClient();
 const app = express();
 
-//GET - /posts
+// app.use(express.json());
+app.use(express.urlencoded());
+
+//Get all posts
 app.get("/posts", async (req, res) => {
   const post = await prisma.post.findMany();
   res.json(post);
 });
 
-//GET - /post/:id
-app.get("/post/:id", async (req, res) => {
+//Get specific post
+app.get("/posts/:id", async (req, res) => {
   const id = req.params.id;
 
   const post = await prisma.post.findUnique({
@@ -20,7 +23,7 @@ app.get("/post/:id", async (req, res) => {
   res.json(post);
 });
 
-//POST - /posts
+//Create a new post
 app.post("/posts", async (req, res) => {
   const { title, content, authorEmail } = req.body;
   const result = await prisma.post.create({
@@ -30,7 +33,32 @@ app.post("/posts", async (req, res) => {
       author: { connect: { email: authorEmail } },
     },
   });
-  res.json(result);
+  res.json(req.body);
+});
+
+//Edit a specific post
+app.put("/posts/:id", async (req, res) => {
+  const { id } = req.params;
+  const { title, content } = req.body;
+
+  const result = await prisma.post.update({
+    where: { id: Number(id) },
+    data: {
+      title,
+      content,
+    },
+  });
+  res.json(req.body);
+});
+
+//Delete specific post
+app.delete("/posts/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const result = await prisma.post.delete({
+    where: { id: Number(id) },
+  });
+  res.json(req.params.id);
 });
 
 //GET - /users
