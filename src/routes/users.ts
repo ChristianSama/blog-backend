@@ -23,4 +23,14 @@ router.get("/", async (req, res) => {
   });
 });
 
+//Get specific user
+router.get("/:id", async (req, res) => {
+  const id = req.params.id
+
+  const user = await prisma.user.findUnique({
+    where: { id: Number(id) }
+  })
+  res.json(user);
+})
+
 export default router;
