@@ -1,16 +1,14 @@
 import express from "express";
-import { PrismaClient } from "@prisma/client";
 import passport from "passport";
 import jwt from "jsonwebtoken";
 import 'dotenv/config'
 
-const prisma = new PrismaClient();
 const router = express.Router();
 
 router.post(
   "/signup",
   passport.authenticate("signup", { session: false }),
-  async (req, res, next) => {
+  async (req, res) => {
     res.json({
       message: "Signup successfull",
       user: req.user,
