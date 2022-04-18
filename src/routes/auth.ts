@@ -54,4 +54,9 @@ router.post("/login", (req, res, next) => {
   })(req, res, next);
 });
 
+router.post("/logout", (req, res) => {
+  res.clearCookie("jwtToken")
+  res.redirect("/auth/login")
+})
+
 export default router;
