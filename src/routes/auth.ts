@@ -34,15 +34,23 @@ router.post("/login", (req, res, next) => {
     const token = jwt.sign(payload, process.env.JWT_SECRET as string, {
       expiresIn: "1h",
     });
-    return res.status(201).json({
-      status: "success",
-      data: {
-        message: "Welcome back.",
-        user,
-        token,
-      },
-      statusCode: res.statusCode,
-    });
+    return res
+      .status(201)
+      .cookie("jwtToken", token, {
+        httpOnly: true,
+        maxAge: (1000*60*5),
+        secure: true,
+        signed: true
+      })
+      .json({
+        status: "success",
+        data: {
+          message: "Welcome back.",
+          user,
+          token,
+        },
+        statusCode: res.statusCode,
+      });
   })(req, res, next);
 });
 

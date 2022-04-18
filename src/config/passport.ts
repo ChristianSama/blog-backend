@@ -1,3 +1,4 @@
+import express, { Request } from "express";
 import { PrismaClient } from "@prisma/client";
 import { Strategy as localStrategy } from "passport-local";
 import { Strategy as jwtStrategy, ExtractJwt } from "passport-jwt";
@@ -81,21 +82,30 @@ export default (passport: any) => {
     new jwtStrategy(
       {
         secretOrKey: process.env.JWT_SECRET,
-        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+        jwtFromRequest: cookieExtractor
       },
       async (jwtPayload, done) => {
-        console.log(jwtPayload.id);
         try {
-          const user = await prisma.user.findUnique({ where: { id: jwtPayload.id } });
+          const user = await prisma.user.findUnique({
+            where: { id: jwtPayload.id },
+          });
           if (user) {
             return done(null, user);
           } else {
             return done(null, false);
           }
-        } catch(err) {
+        } catch (err) {
           return done(err, false);
         }
       }
     )
   );
+};
+
+const cookieExtractor = (req: Request) => {
+  let token = null;
+  if (req && req.signedCookies) {
+    token = req.signedCookies["jwtToken"];
+  }
+  return token;
 };

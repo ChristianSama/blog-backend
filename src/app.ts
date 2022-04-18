@@ -4,6 +4,7 @@ import passportConfig from "./config/passport";
 import usersRouter from "./routes/users";
 import postsRouter from "./routes/posts";
 import authRouter from "./routes/auth";
+import cookieParser from "cookie-parser";
 import path from "path";
 import "dotenv/config";
 
@@ -11,6 +12,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded());
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
 app.set("views", path.join(__dirname, "/views"));
 app.set("view engine", "ejs");
