@@ -18,7 +18,6 @@ app.use("/auth", authRouter);
 app.use("/users", passport.authenticate('jwt', {session: false}), usersRouter);
 app.use("/posts", passport.authenticate('jwt', {session:false}), postsRouter);
 
-
 //Start Server
 const server = app.listen(process.env.PORT, () => {
   console.log("Server listening on port 3000");

@@ -21,13 +21,6 @@ model Post {
   authorId  Int
 }
 
-model Profile {
-  id     Int     @id @default(autoincrement())
-  bio    String?
-  user   User    @relation(fields: [userId], references: [id])
-  userId Int     @unique
-}
-
 model User {
   id       Int      @id @default(autoincrement())
   email    String   @unique
@@ -35,5 +28,4 @@ model User {
   name     String
   lastname String
   posts    Post[]
-  profile  Profile?
 }
