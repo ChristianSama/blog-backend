@@ -6,8 +6,8 @@ import "dotenv/config";
 const router = express.Router();
 
 router.get("/signup", (req, res) => {
-  res.render("signup");
-});
+  res.render("auth/signup")
+})
 
 router.post(
   "/signup",

@@ -22,14 +22,16 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.use("/auth", authRouter);
-app.use(
-  "/users",
+app.use("/auth", 
+  authRouter
+);
+
+app.use("/users",
   passport.authenticate("jwt", { session: false }),
   usersRouter
 );
-app.use(
-  "/posts",
+
+app.use("/posts",
   passport.authenticate("jwt", { session: false }),
   postsRouter
 );

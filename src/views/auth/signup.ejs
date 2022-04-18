@@ -1,8 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-</head>
-<body>
-    
-</body>
-</html>
+<%- include("../partials/top"); %>
+
+<form action="/auth/signup" method="post">
+  <label>
+    Name:
+    <input type="text" name="name">
+  </label>
+  <label>
+    Last Name:
+    <input type="text" name="lastname">
+  </label>
+  <label>
+    Email:
+    <input type="text" name="email">
+  </label>
+  <label>
+    Password:
+    <input type="text" name="password">
+  </label>
+</form>
+
+<%- include("../partials/bottom"); %>
