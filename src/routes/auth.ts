@@ -5,7 +5,12 @@ import "dotenv/config";
 
 const router = express.Router();
 
-router.post("/signup",
+router.get("/signup", (req, res) => {
+  res.render("signup");
+});
+
+router.post(
+  "/signup",
   passport.authenticate("signup", { session: false }),
   async (req, res) => {
     res.json({
