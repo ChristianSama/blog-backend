@@ -1,0 +1,15 @@
+<%- include("../partials/top"); %>
+
+<form action="/auth/login" method="post">
+  <label>
+    Email:
+    <input type="text" name="email">
+  </label>
+  <label>
+    Password:
+    <input type="text" name="password">
+  </label>
+  <button type="submit">Login</button>
+</form>
+
+<%- include("../partials/bottom"); %>

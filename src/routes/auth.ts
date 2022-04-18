@@ -20,6 +20,10 @@ router.post(
   }
 );
 
+router.get("/login", (req, res) => {
+  res.render("auth/login")
+})
+
 router.post("/login", (req, res, next) => {
   passport.authenticate("login", { session: false }, (err, user, info) => {
     // Check for errors
