@@ -1,15 +1,15 @@
 import { PrismaClient } from "@prisma/client";
-import { Strategy } from "passport-local";
-import passport from "passport";
+import { Strategy as localStrategy } from "passport-local";
+import { Strategy as jwtStrategy, ExtractJwt } from "passport-jwt";
 import argon2 from "argon2";
-import { Request, Response, NextFunction } from "express";
+import "dotenv/config";
 
 const prisma = new PrismaClient();
 
 export default (passport: any) => {
   passport.use(
     "signup",
-    new Strategy(
+    new localStrategy(
       {
         usernameField: "email",
         passwordField: "password",
@@ -43,7 +43,7 @@ export default (passport: any) => {
 
   passport.use(
     "login",
-    new Strategy(
+    new localStrategy(
       {
         usernameField: "email",
         passwordField: "password",
@@ -54,10 +54,9 @@ export default (passport: any) => {
           const user = await prisma.user.findUnique({ where: { email } });
           if (!user) {
             return done(null, false, {
-              message: "No user found",
+              message: "Incorrect username or password",
             });
           }
-
           //Compare password and hash
           const validPassword = await argon2.verify(
             user.password as string,
@@ -65,7 +64,7 @@ export default (passport: any) => {
           );
           if (!validPassword) {
             return done(null, false, {
-              message: "Wrong password",
+              message: "Incorrect username or password",
             });
           }
           return done(null, user, {
@@ -77,11 +76,26 @@ export default (passport: any) => {
       }
     )
   );
-}
 
-// export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
-//   if (req.isAuthenticated()) {
-//     return next();
-//   }
-//   res.status(401)
-// }
+  passport.use(
+    new jwtStrategy(
+      {
+        secretOrKey: process.env.JWT_SECRET,
+        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      },
+      async (jwtPayload, done) => {
+        console.log(jwtPayload.id);
+        try {
+          const user = await prisma.user.findUnique({ where: { id: jwtPayload.id } });
+          if (user) {
+            return done(null, user);
+          } else {
+            return done(null, false);
+          }
+        } catch(err) {
+          return done(err, false);
+        }
+      }
+    )
+  );
+};

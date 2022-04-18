@@ -1,12 +1,11 @@
 import express from "express";
 import passport from "passport";
 import jwt from "jsonwebtoken";
-import 'dotenv/config'
+import "dotenv/config";
 
 const router = express.Router();
 
-router.post(
-  "/signup",
+router.post("/signup",
   passport.authenticate("signup", { session: false }),
   async (req, res) => {
     res.json({
@@ -16,26 +15,25 @@ router.post(
   }
 );
 
-router.post("/login", async (req, res, next) => {
-  passport.authenticate("login", async (err, user, info) => {
-    try {
-      if (err || !user) {
-        const error = new Error("An error occurred.");
+router.post("/login", (req, res, next) => {
+  passport.authenticate("login", { session: false }, (err, user, info) => {
+    // Check for errors
+    if (err) throw new Error(err);
 
-        return next(error);
-      }
-
-      req.login(user, { session: false }, async (error) => {
-        if (error) return next(error);
-
-        const body = { id: user.id, email: user.email };
-        const token = jwt.sign({ user: body }, process.env.JWT_SECRET as string);
-
-        return res.json({ token });
-      });
-    } catch (error) {
-      return next(error);
-    }
+    // Generate token
+    const payload = { id: user.id };
+    const token = jwt.sign(payload, process.env.JWT_SECRET as string, {
+      expiresIn: "1h",
+    });
+    return res.status(201).json({
+      status: "success",
+      data: {
+        message: "Welcome back.",
+        user,
+        token,
+      },
+      statusCode: res.statusCode,
+    });
   })(req, res, next);
 });
 

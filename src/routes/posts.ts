@@ -30,7 +30,7 @@ router.post("/", async (req, res) => {
       author: { connect: { email: authorEmail } },
     },
   });
-  res.json(req.body);
+  res.json(result);
 });
 
 //Edit a specific post
@@ -45,7 +45,7 @@ router.put("/:id", async (req, res) => {
       content,
     },
   });
-  res.json(req.body);
+  res.json(result);
 });
 
 //Delete specific post
@@ -55,7 +55,7 @@ router.delete("/:id", async (req, res) => {
   const result = await prisma.post.delete({
     where: { id: Number(id) },
   });
-  res.json(req.params.id);
+  res.json(result);
 });
 
 export default router;
