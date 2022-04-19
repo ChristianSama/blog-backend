@@ -18,6 +18,7 @@ export default (passport: any) => {
       },
       async (req, email, password, done) => {
         try {
+          console.log("signup")
           // Check if user found
           const existsEmail = await prisma.user.findFirst({ where: { email } });
           if (existsEmail)

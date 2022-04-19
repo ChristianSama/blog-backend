@@ -1,24 +1,27 @@
-import { NextFunction, Request, Response } from 'express'
-import passport from "passport"
-import jwt from "jsonwebtoken"
+import { NextFunction, Request, Response } from "express";
+import passport from "passport";
+import jwt from "jsonwebtoken";
+import "dotenv/config";
 
 export const getSignup = (req: Request, res: Response) => {
-  res.render("auth/signup")
-}
+  res.render("auth/signup");
+};
 
 export const postSignup = (req: Request, res: Response) => {
+  // console.log(req);
   passport.authenticate("signup", { session: false }),
-  async (req: Request, res: Response) => {
-    res.json({
+  (req: Request, res: Response) => {
+    console.log(req);
+    return res.json({
       message: "Signup successfull",
       user: req.user,
     });
-  }
-}
+  };
+};
 
 export const getLogin = (req: Request, res: Response) => {
-  res.render("auth/login")
-}
+  res.render("auth/login");
+};
 
 export const postLogin = (req: Request, res: Response) => {
   (req: Request, res: Response, next: NextFunction) => {
@@ -52,10 +55,10 @@ export const postLogin = (req: Request, res: Response) => {
           .redirect("/")
       );
     })(req, res, next);
-  }
-}
+  };
+};
 
 export const postLogout = (req: Request, res: Response) => {
   res.clearCookie("jwtToken");
   res.redirect("/");
-}
+};

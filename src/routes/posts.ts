@@ -1,24 +1,15 @@
 import express from 'express';
 import { PrismaClient } from "@prisma/client";
+import * as postsController from "../controllers/posts.controller"
 
 const prisma = new PrismaClient();
 const router = express.Router();
 
 //Get all posts
-router.get("/", async (req, res) => {
-  const post = await prisma.post.findMany();
-  res.json(post);
-});
+router.get("/", postsController.getPosts);
 
 //Get specific post
-router.get("/:id", async (req, res) => {
-  const id = req.params.id;
-
-  const post = await prisma.post.findUnique({
-    where: { id: Number(id) },
-  });
-  res.json(post);
-});
+router.get("/:id", postsController.getPost);
 
 //Create a new post
 router.post("/", async (req, res) => {
