@@ -12,41 +12,12 @@ router.get("/", postsController.getPosts);
 router.get("/:id", postsController.getPost);
 
 //Create a new post
-router.post("/", async (req, res) => {
-  const { title, content, authorEmail } = req.body;
-  const result = await prisma.post.create({
-    data: {
-      title,
-      content,
-      author: { connect: { email: authorEmail } },
-    },
-  });
-  res.json(result);
-});
+router.post("/", postsController.createPost);
 
 //Edit a specific post
-router.put("/:id", async (req, res) => {
-  const { id } = req.params;
-  const { title, content } = req.body;
-
-  const result = await prisma.post.update({
-    where: { id: Number(id) },
-    data: {
-      title,
-      content,
-    },
-  });
-  res.json(result);
-});
+router.put("/:id", postsController.editPost);
 
 //Delete specific post
-router.delete("/:id", async (req, res) => {
-  const { id } = req.params;
-
-  const result = await prisma.post.delete({
-    where: { id: Number(id) },
-  });
-  res.json(result);
-});
+router.delete("/:id", postsController.deletePost);
 
 export default router;

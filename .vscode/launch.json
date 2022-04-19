@@ -22,7 +22,6 @@
             "request": "launch",
             "args": ["${relativeFile}"],
             "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
-            "program": "${workspaceFolder",
             "sourceMaps": true,
             "cwd": "${workspaceRoot}",
             "protocol": "inspector",

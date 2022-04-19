@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get("/signup", authController.getSignup);
 
-router.post("/signup", passport.authenticate("signup", { session: false }), authController.postSignup);
+router.post("/signup", authController.postSignup);
 
 router.get("/login", authController.getLogin);
 
