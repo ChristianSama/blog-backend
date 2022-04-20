@@ -1,19 +1,17 @@
 import express from "express";
-import passport from "passport";
-import jwt from "jsonwebtoken";
-import "dotenv/config";
 import * as authController from "../controllers/auth.controller";
+import * as passportConfig from "../config/passport"
 
 const router = express.Router();
 
-router.get("/signup", authController.getSignup);
+router.get("/signup", passportConfig.isNotAuthenticated, authController.getSignup);
 
-router.post("/signup", authController.postSignup);
+router.post("/signup", passportConfig.isNotAuthenticated, authController.postSignup);
 
-router.get("/login", authController.getLogin);
+router.get("/login", passportConfig.isNotAuthenticated, authController.getLogin);
 
-router.post("/login", authController.postLogin);
+router.post("/login", passportConfig.isNotAuthenticated, authController.postLogin);
 
-router.post("/logout", authController.postLogout);
+router.post("/logout", passportConfig.isAuthenticated, authController.postLogout);
 
 export default router;

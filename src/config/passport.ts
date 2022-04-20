@@ -1,13 +1,13 @@
-import express, { Request } from "express";
+import { NextFunction, Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import { Strategy as localStrategy } from "passport-local";
-import { Strategy as jwtStrategy, ExtractJwt } from "passport-jwt";
+import { Strategy as jwtStrategy } from "passport-jwt";
 import argon2 from "argon2";
 import "dotenv/config";
 
 const prisma = new PrismaClient();
 
-export default (passport: any) => {
+export const init = (passport: any) => {
   passport.use(
     "signup",
     new localStrategy(
@@ -18,7 +18,7 @@ export default (passport: any) => {
       },
       async (req, email, password, done) => {
         try {
-          console.log("signup")
+          console.log("signup");
           // Check if user found
           const existsEmail = await prisma.user.findFirst({ where: { email } });
           if (existsEmail)
@@ -83,7 +83,7 @@ export default (passport: any) => {
     new jwtStrategy(
       {
         secretOrKey: process.env.JWT_SECRET,
-        jwtFromRequest: cookieExtractor
+        jwtFromRequest: cookieExtractor,
       },
       async (jwtPayload, done) => {
         try {
@@ -101,6 +101,24 @@ export default (passport: any) => {
       }
     )
   );
+};
+
+export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
+  const token = cookieExtractor(req);
+  if (token) {
+    next();
+    return;
+  }
+  res.redirect("/");
+};
+
+export const isNotAuthenticated = (req: Request, res: Response, next: NextFunction) => {
+  const token = cookieExtractor(req);
+  if (token) {
+    res.redirect("/");
+    return;
+  }
+  next();
 };
 
 const cookieExtractor = (req: Request) => {

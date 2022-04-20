@@ -27,9 +27,9 @@ export const postLogin = (req: Request, res: Response, next: NextFunction) => {
     });
     return res
       .cookie("jwtToken", token, {
-        httpOnly: true,
-        maxAge: 1000 * 60 * 5,
-        secure: true,
+        httpOnly: true, //not accesible through document.cookie
+        maxAge: 60*60*1000, //1 hour
+        secure: true, //if using https
         signed: true,
       })
       .status(201)
