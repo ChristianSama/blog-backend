@@ -4,6 +4,7 @@ import { Strategy as localStrategy } from "passport-local";
 import { Strategy as jwtStrategy } from "passport-jwt";
 import argon2 from "argon2";
 import "dotenv/config";
+import passport from "passport";
 
 const prisma = new PrismaClient();
 
@@ -104,21 +105,23 @@ export const init = (passport: any) => {
 };
 
 export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
-  const token = cookieExtractor(req);
-  if (token) {
-    next();
-    return;
-  }
-  res.redirect("/");
+  passport.authenticate("jwt", {session: false}, (err, user, info) => {
+    if (user) {
+      next();
+      return;
+    }
+    res.redirect("/");
+  })(req, res, next);
 };
 
 export const isNotAuthenticated = (req: Request, res: Response, next: NextFunction) => {
-  const token = cookieExtractor(req);
-  if (token) {
-    res.redirect("/");
-    return;
-  }
-  next();
+  passport.authenticate("jwt", {session: false}, (err, user, info) => {
+    if (user) {
+      res.redirect("/");
+      return;
+    }
+    next();
+  })(req, res, next);
 };
 
 const cookieExtractor = (req: Request) => {
