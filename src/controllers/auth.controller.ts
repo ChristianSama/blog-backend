@@ -30,7 +30,7 @@ export const postLogin = (req: Request, res: Response, next: NextFunction) => {
         httpOnly: true, //not accesible through document.cookie
         maxAge: 60*60*1000, //1 hour
         secure: true, //if using https
-        signed: true,
+        signed: true, //to make sure client can't modify the cookie
       })
       .status(201)
       .redirect("/");
