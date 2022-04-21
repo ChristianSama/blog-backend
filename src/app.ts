@@ -20,6 +20,8 @@ app.use(passport.initialize());
 app.set("views", path.join(__dirname, "/views"));
 app.set("view engine", "ejs");
 
+app.use(passportConfig.checkUser)
+
 app.get("/", (req, res) => {
   res.render("index");
 });

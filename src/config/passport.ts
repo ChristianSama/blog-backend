@@ -124,6 +124,13 @@ export const isNotAuthenticated = (req: Request, res: Response, next: NextFuncti
   })(req, res, next);
 };
 
+export const checkUser = (req: Request, res: Response, next: NextFunction) => {
+  passport.authenticate("jwt", {session: false}, (err, user, info) => {
+    res.locals.user = user
+    next()
+  })(req, res, next);
+}
+
 const cookieExtractor = (req: Request) => {
   let token = null;
   if (req && req.signedCookies) {
