@@ -1,25 +1,21 @@
 import { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
+import usersService from "../services/users.service";
 
-const prisma = new PrismaClient();
+const usersServiceInstance = new usersService();
 
 export const getUsers = async (req: Request, res: Response) => {
-  const users = await prisma.user.findMany();
-  // res.json(result);
-  res.render("users/users", {users: users})
+  const users = await usersServiceInstance.getUsers();
+  res.json(users);
 };
 
 export const getUser = async (req: Request, res: Response) => {
   const id = req.params.id;
-
-  const user = await prisma.user.findUnique({
-    where: { id: Number(id) },
-  });
+  const user = await usersServiceInstance.getUser(parseInt(id)); 
   res.json(user);
 };
 
 export const operation1 = async (req: Request, res: Response) => {
-  const users = await prisma.user.findMany();
+  const users = await usersServiceInstance.getUsers();
 
   users.sort((a, b) => a.name.localeCompare(b.name));
   const result = users.map((user) => {
@@ -33,7 +29,7 @@ export const operation1 = async (req: Request, res: Response) => {
 };
 
 export const operation2 = async (req: Request, res: Response) => {
-  const users = await prisma.user.findMany();
+  const users = await usersServiceInstance.getUsers();
   users.sort((a, b) => a.name.localeCompare(b.name));
   const result = users.filter((user) => {
     if (user.name[0] === "a" || user.name[0] === "b" || user.name[0] === "c") {
@@ -45,7 +41,7 @@ export const operation2 = async (req: Request, res: Response) => {
 };
 
 export const operation3 = async (req: Request, res: Response) => {
-  const users = await prisma.user.findMany();
+  const users = await usersServiceInstance.getUsers();
   const aUsers = users.filter((user) => (user.name[0] === "a" ? true : false));
   const bUsers = users.filter((user) => (user.name[0] === "b" ? true : false));
   const cUsers = users.filter((user) => (user.name[0] === "c" ? true : false));
