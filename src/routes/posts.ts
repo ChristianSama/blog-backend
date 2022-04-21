@@ -1,8 +1,6 @@
 import express from 'express';
-import { PrismaClient } from "@prisma/client";
-import * as postsController from "../controllers/posts.controller"
+import * as postsController from "../controllers/api/posts"
 
-const prisma = new PrismaClient();
 const router = express.Router();
 
 //Get all posts

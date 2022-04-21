@@ -1,23 +1,23 @@
 import { Request, Response } from "express";
-import PostService from "../services/posts.service";
+import PostService from "../../services/posts.service";
 
 const postServiceInstance = new PostService();
 
 export const getPosts = async (req: Request, res: Response) => {
   const posts = await postServiceInstance.getPosts();
-  res.json(posts);
+  res.render("posts/posts/", {posts: posts} );
 };
 
 export const getPost = async (req: Request, res: Response) => {
   const id = req.params.id;
   const post = await postServiceInstance.getPost(parseInt(id));
-  res.json(post);
+  res.render("posts/post", {post: post} );
 }
 
 export const createPost = async (req: Request, res: Response) => {
   const { title, content, authorEmail } = req.body;
   const post = await postServiceInstance.createPost(title, content, authorEmail);
-  res.json(post);
+  // res.redirect("posts/post")
 }
 
 export const editPost = async (req: Request, res: Response) => {

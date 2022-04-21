@@ -9,7 +9,7 @@ export const getSignup = (req: Request, res: Response) => {
 
 export const postSignup = (req: Request, res: Response) => {
   passport.authenticate("signup", { session: false }),
-  res.redirect("/")
+  res.redirect("/");
 };
 
 export const getLogin = (req: Request, res: Response) => {
