@@ -1,0 +1,12 @@
+<%- include("../partials/top"); %>
+
+<h1><%=user.name%> <%=user.lastname%></h1>
+
+<h2>Posts</h2>
+<% for (post of user.posts) { %>
+  <div class="post">
+    <p><%= post.title %></p>
+    <p><%= post.content %></p>
+  </div>
+<% } %>
+<%- include("../partials/bottom"); %>

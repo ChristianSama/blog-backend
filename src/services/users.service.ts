@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
-import IUserService from "../interfaces/users.interface"
+import IUserService from "../interfaces/users.interface";
 
 const prisma = new PrismaClient();
 
-export default class UserService implements IUserService{
+export default class UserService implements IUserService {
   async getUsers() {
     const users = await prisma.user.findMany();
     return users;
@@ -12,6 +12,7 @@ export default class UserService implements IUserService{
   async getUser(id: Number) {
     const user = await prisma.user.findUnique({
       where: { id: Number(id) },
+      include: { posts: true },
     });
     return user;
   }

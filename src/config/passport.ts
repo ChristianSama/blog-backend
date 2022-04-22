@@ -1,10 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import { Strategy as localStrategy } from "passport-local";
-import { Strategy as jwtStrategy } from "passport-jwt";
+import { Strategy as jwtStrategy, VerifiedCallback, VerifyCallback } from "passport-jwt";
 import argon2 from "argon2";
 import "dotenv/config";
 import passport from "passport";
+import { JwtPayload } from "jsonwebtoken";
 
 const prisma = new PrismaClient();
 
@@ -85,13 +86,15 @@ export const init = (passport: any) => {
       {
         secretOrKey: process.env.JWT_SECRET,
         jwtFromRequest: cookieExtractor,
+        passReqToCallback: true
       },
-      async (jwtPayload, done) => {
+      async (req: Request, jwtPayload: JwtPayload, done: VerifiedCallback) => {
         try {
           const user = await prisma.user.findUnique({
             where: { id: jwtPayload.id },
           });
           if (user) {
+            req.user = user;
             return done(null, user);
           } else {
             return done(null, false);

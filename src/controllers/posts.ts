@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import PostService from "../services/posts.service";
+import { User } from "@prisma/client";
 
 const postServiceInstance = new PostService();
 
@@ -14,8 +15,14 @@ export const getPost = async (req: Request, res: Response) => {
   res.render("posts/post", {post: post} );
 }
 
+export const getCreateForm = (req: Request, res: Response) => {
+  res.render("posts/create");
+}
+
 export const createPost = async (req: Request, res: Response) => {
-  const { title, content, authorEmail } = req.body;
+  const { title, content } = req.body;
+  const user = req.user as User;
+  const authorEmail = user.email;
   const post = await postServiceInstance.createPost(title, content, authorEmail);
   res.redirect("/posts/" + post.id)
 }

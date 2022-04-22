@@ -17,14 +17,19 @@
           <li class="nav-item">
             <a class="nav-link" href="/posts">Posts</a>
           </li>
-          <% } %> <% if (!user) { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/posts/create">Create Post</a>
+          </li>
+          <% } %>
+          <% if (!user) { %>
           <li class="nav-item">
             <a class="nav-link" href="/auth/login">Login</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/auth/signup">Signup</a>
           </li>
-          <% } %> <% if (user) { %>
+          <% } %>
+          <% if (user) { %>
           <li class="nav-item">
             <form action="/auth/logout" method="post">
               <button type="submit">Logout</button>
