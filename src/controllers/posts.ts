@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import PostService from "../../services/posts.service";
+import PostService from "../services/posts.service";
 
 const postServiceInstance = new PostService();
 
@@ -17,7 +17,7 @@ export const getPost = async (req: Request, res: Response) => {
 export const createPost = async (req: Request, res: Response) => {
   const { title, content, authorEmail } = req.body;
   const post = await postServiceInstance.createPost(title, content, authorEmail);
-  // res.redirect("posts/post")
+  res.redirect("/posts/" + post.id)
 }
 
 export const editPost = async (req: Request, res: Response) => {

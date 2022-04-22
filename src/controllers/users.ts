@@ -1,17 +1,17 @@
 import { Request, Response } from "express";
-import usersService from "../../services/users.service";
+import usersService from "../services/users.service";
 
 const usersServiceInstance = new usersService();
 
 export const getUsers = async (req: Request, res: Response) => {
   const users = await usersServiceInstance.getUsers();
-  res.json(users);
+  res.render("users/users", {users: users})
 };
 
 export const getUser = async (req: Request, res: Response) => {
   const id = req.params.id;
   const user = await usersServiceInstance.getUser(parseInt(id)); 
-  res.json(user);
+  res.render("users/user", {user: user})
 };
 
 export const operation1 = async (req: Request, res: Response) => {
