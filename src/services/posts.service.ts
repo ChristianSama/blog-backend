@@ -12,7 +12,16 @@ export default class PostService implements IPostService {
   async getPost(id: Number) {
     const post = await prisma.post.findUnique({
       where: { id: Number(id) },
+      include: { author: {
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          lastname: true
+        }
+      } }
     });
+    console.log(post);
     return post;
   }
 
