@@ -10,14 +10,17 @@ router.get("/", postsController.getPosts);
 //Get create post form
 router.get("/create", postsController.getCreateForm)
 
+//Get edit form
+router.get("/edit/:id", postsController.getEditForm)
+
+//Edit a specific post
+router.put("/:id", postsController.editPost);
+
 //Get specific post
 router.get("/:id", postsController.getPost);
 
 //Create a new post
 router.post("/", postsController.createPost);
-
-//Edit a specific post
-router.put("/:id", postsController.editPost);
 
 //Delete specific post
 router.delete("/:id", postsController.deletePost);

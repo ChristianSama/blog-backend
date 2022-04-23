@@ -5,6 +5,7 @@ import usersRouter from "./routes/users";
 import postsRouter from "./routes/posts";
 import authRouter from "./routes/auth";
 import cookieParser from "cookie-parser";
+import methodOverride from "method-override";
 import path from "path";
 import "dotenv/config";
 
@@ -13,6 +14,7 @@ const app = express();
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(express.json());
 app.use(express.urlencoded());
+app.use(methodOverride("_method"))
 
 passportConfig.init(passport);
 app.use(passport.initialize());

@@ -1,0 +1,16 @@
+<%- include("../partials/top"); %>
+  <div style="width: 50rem; margin: 0 auto;">
+    <h1>Edit Post</h1>
+    <form action=<%=`/posts/${post.id}?_method=PUT`%> method="post">
+      <div class="mb-3 d-flex flex-column justify-content-center">
+          <input type="text" name="title" class="form-control mb-3" placeholder="Title" value=<%=post.title%>>
+          <textarea name="content" cols="30" rows="10" class="form-control" placeholder="Type post content here..."><%=post.content%></textarea>
+          <div class="d-flex justify-content-end m-3">
+            <button class="btn btn-outline-danger btn-lg me-3">Cancel</button>
+            <button type="submit" class="btn btn-secondary btn-lg">Update Post</button>
+          </div>
+      </div>
+    </form>
+  </div>
+</div>
+<%- include("../partials/bottom"); %>

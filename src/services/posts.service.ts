@@ -21,7 +21,6 @@ export default class PostService implements IPostService {
         }
       } }
     });
-    console.log(post);
     return post;
   }
 
