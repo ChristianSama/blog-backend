@@ -6,7 +6,9 @@
     <div class="card mb-4">
       <div class="card-body">
         <h6 class="card-subtitle text-muted mb-4"><%= post.createdAt.toLocaleString("ed-US", {year: "numeric", month: "short", day: "numeric"}) %></h6>
-        <h4 class="card-title mb-3"><%= post.title %></h4>
+        <a class="text-decoration-none" href=<%= "/posts/" + post.id %>>
+          <h4 class="card-title mb-3"><%= post.title %></h4>
+        </a>
         <p class="card-text"><%= post.content %></p>
       </div>
     </div>
