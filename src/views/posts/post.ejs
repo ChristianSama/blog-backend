@@ -1,2 +1,16 @@
-<h1><%= post.title %></h1>
-<p><%= post.content %></p>
+<%- include("../partials/top"); %>
+<div style="width: 50rem; margin: 0 auto;">
+  <a class="text-decoration-none" href=<%="/users/" + post.author.id%>>
+    <p><%=post.author.name%> <%=post.author.lastname%></p>
+  </a>
+  <p class="text-muted mb-5"><%= post.createdAt.toLocaleString("ed-US", {year: "numeric", month: "short", day: "numeric"}) %></p>
+  <div class="d-flex justify-content-between mb-5">
+    <h1><%= post.title %></h1>
+    <div class="d-flex align-items-center">
+      <a href=<%= "/posts/edit/" + post.id%> class="btn btn-outline-secondary me-3">Edit Post</a>
+      <a href=<%= "/posts/delete/" + post.id%> class="btn btn-outline-danger">Delete Post</a>
+    </div>
+  </div>
+  <p><%= post.content %></p>
+</div>
+<%- include("../partials/bottom"); %>
