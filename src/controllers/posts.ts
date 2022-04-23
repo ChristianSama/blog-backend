@@ -6,7 +6,7 @@ const postServiceInstance = new PostService();
 
 export const getPosts = async (req: Request, res: Response) => {
   const posts = await postServiceInstance.getPosts();
-  res.render("posts/posts/", {posts: posts} );
+  res.render("posts/posts", {posts: posts} );
 };
 
 export const getPost = async (req: Request, res: Response) => {
