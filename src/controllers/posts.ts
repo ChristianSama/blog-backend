@@ -47,5 +47,5 @@ export const editPost = async (req: Request, res: Response) => {
 export const deletePost = async (req: Request, res: Response) => {
   const { id } = req.params;
   const post = await postServiceInstance.deletePost(parseInt(id));
-  res.json(post);
+  res.redirect("/posts")
 };

@@ -13,7 +13,7 @@ const app = express();
 
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded( {extended: true}));
 app.use(methodOverride("_method"))
 
 passportConfig.init(passport);
