@@ -1,0 +1,16 @@
+<%- include("../partials/top"); %>
+<div style="width: 50rem; margin: 0 auto;">
+  <h1 class="mb-4">Posts</h1>
+  <% for (post of posts) { %>
+    <div class="card mb-4">
+      <div class="card-body">
+        <h6 class="card-subtitle text-muted mb-3"><%= post.createdAt.toLocaleString("ed-US", {year: "numeric", month: "short", day: "numeric"}) %></h6>
+        <a class="text-decoration-none" href=<%= "/posts/" + post.id %>>
+          <h4 class="card-title mb-3"><%= post.title %></h4>
+        </a>
+        <p class="card-text"><%= post.content %></p>
+      </div>
+    </div>
+  <% } %>
+</div>
+<%- include("../partials/bottom"); %>
