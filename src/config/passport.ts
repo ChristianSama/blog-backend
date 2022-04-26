@@ -113,28 +113,29 @@ export const init = (passport: any) => {
 };
 
 export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
-  passport.authenticate("jwt", {session: false}, (err, user, info) => {
-    if (user) {
-      next();
-      return;
-    }
-    res.redirect("/");
-  })(req, res, next);
+  const user = req.user
+  if (user) {
+    console.log(user);
+    next();
+    return;
+  }
+  res.redirect("/");
 };
 
 export const isNotAuthenticated = (req: Request, res: Response, next: NextFunction) => {
-  passport.authenticate("jwt", {session: false}, (err, user, info) => {
-    if (user) {
-      res.redirect("/");
-      return;
-    }
-    next();
-  })(req, res, next);
+  const user = req.user
+  if (user) {
+    console.log(user);
+    res.redirect("/");
+    return;
+  }
+  next();
 };
 
 export const checkUser = (req: Request, res: Response, next: NextFunction) => {
   passport.authenticate("jwt", {session: false}, (err, user, info) => {
     res.locals.user = user
+    req.user = user
     next()
   })(req, res, next);
 }
