@@ -46,6 +46,10 @@ export const editPost = async (req: Request, res: Response) => {
 
 export const deletePost = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const post = await postServiceInstance.deletePost(parseInt(id));
-  res.redirect("/posts")
+  const post = await postServiceInstance.getPost(parseInt(id));
+  const user = req.user as User;
+  if (post?.author.id === user.id) {
+    await postServiceInstance.deletePost(parseInt(id));
+  }
+  res.redirect("/posts");
 };

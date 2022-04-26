@@ -1,5 +1,9 @@
 <%- include("partials/top"); %>
 
-<h1>Hola <%= user.name %></h1>
+<h1>Hola
+<% if (user) { %>
+    <%= user.name %>
+<% } %>
+</h1>
 
 <%- include("partials/bottom"); %>
