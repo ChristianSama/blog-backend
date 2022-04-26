@@ -7,8 +7,8 @@ export const getSignup = (req: Request, res: Response) => {
   res.render("auth/signup");
 };
 
-export const postSignup = (req: Request, res: Response) => {
-  passport.authenticate("signup", { session: false }),
+export const postSignup = (req: Request, res: Response, next: NextFunction) => {
+  passport.authenticate("signup", { session: false })(req, res, next);
   res.redirect("/");
 };
 

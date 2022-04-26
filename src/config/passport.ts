@@ -20,7 +20,6 @@ export const init = (passport: any) => {
       },
       async (req, email, password, done) => {
         try {
-          console.log("signup");
           // Check if user found
           const existsEmail = await prisma.user.findFirst({ where: { email } });
           if (existsEmail)
@@ -92,6 +91,12 @@ export const init = (passport: any) => {
         try {
           const user = await prisma.user.findUnique({
             where: { id: jwtPayload.id },
+            select: {
+              id: true,
+              email: true,
+              name: true,
+              lastname: true
+            }
           });
           if (user) {
             req.user = user;
