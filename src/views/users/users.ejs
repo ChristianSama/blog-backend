@@ -1,15 +1,35 @@
-<%- include("../partials/top"); %> 
-  <div style="width: 50rem; margin: 0 auto">
+<%- include("../partials/top"); %>
+<div style="width: 50rem; margin: 0 auto">
   <h1>Users</h1>
-    <% for (user of users) { %>
-      <div class="card mt-3">
-        <div class="card-body">
-          <a href=<%= "users/" + user.id %> class="text-decoration-none">
-            <h5 class="card-title"><%= user.name %> <%= user.lastname %></h5>
-          </a>
-          <h6 class="card-subtitle mb-2 text-muted"><%= user.email %></h6>
-        </div>
-      </div>
-    <% } %>
+  <div>
+    <a href="/users">All</a>
+    <button onclick="operation1()">Alphabetical order with uppercase lastnames</button>
+    <button onclick="operation2()">Starting with "a", "b", and "c"</button>
+    <button onclick="operation3()">Counting with "a", "b", and "c"</button>
   </div>
+  <%- include("./userList", users); %>
+</div>
 <%- include("../partials/bottom"); %>
+
+<script>
+  const operation1 = async () => {
+    const url = "http://localhost:3000/users/op1";
+    const response = await fetch(url);
+    const userlist = await response.text();
+    document.getElementById("user-list").innerHTML = userlist
+  };
+
+  const operation2 = async () => {
+    const url = "http://localhost:3000/users/op2";
+    const response = await fetch(url);
+    const userlist = await response.text();
+    document.getElementById("user-list").innerHTML = userlist
+  }
+
+  const operation3 = async () => {
+    const url = "http://localhost:3000/users/op3";
+    const response = await fetch(url);
+    const userlist = await response.text();
+    document.getElementById("user-list").innerHTML = userlist
+  }
+</script>

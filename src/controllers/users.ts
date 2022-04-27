@@ -15,40 +15,16 @@ export const getUser = async (req: Request, res: Response) => {
 };
 
 export const operation1 = async (req: Request, res: Response) => {
-  const users = await usersServiceInstance.getUsers();
-
-  users.sort((a, b) => a.name.localeCompare(b.name));
-  const result = users.map((user) => {
-    return {
-      id: user.id,
-      name: user.name,
-      lastname: user.lastname.toUpperCase(),
-    };
-  });
-  res.json(result);
+  const users = await usersServiceInstance.getUsersAlphabetically();
+  res.render("users/userList", {users: users});
 };
 
 export const operation2 = async (req: Request, res: Response) => {
-  const users = await usersServiceInstance.getUsers();
-  users.sort((a, b) => a.name.localeCompare(b.name));
-  const result = users.filter((user) => {
-    if (user.name[0] === "a" || user.name[0] === "b" || user.name[0] === "c") {
-      return true;
-    }
-    return false;
-  });
-  res.json(result);
+  const users = await usersServiceInstance.getUsersABC();
+  res.render("users/userList", {users: users});
 };
 
 export const operation3 = async (req: Request, res: Response) => {
-  const users = await usersServiceInstance.getUsers();
-  const aUsers = users.filter((user) => (user.name[0] === "a" ? true : false));
-  const bUsers = users.filter((user) => (user.name[0] === "b" ? true : false));
-  const cUsers = users.filter((user) => (user.name[0] === "c" ? true : false));
-  const result = {
-    a: aUsers.length,
-    b: bUsers.length,
-    c: cUsers.length,
-  };
-  res.json(result);
+  const userCount = await usersServiceInstance.countUsersABC();
+  res.render("users/userCount", {userCount: userCount});
 };

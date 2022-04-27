@@ -1,0 +1,12 @@
+<div id="user-list">
+  <% for (user of users) { %>
+  <div class="card mt-3">
+    <div class="card-body">
+      <a href="<%=`/users/${user.id}`%>" class="text-decoration-none">
+        <h5 class="card-title"><%= user.name %> <%= user.lastname %></h5>
+      </a>
+      <h6 class="card-subtitle mb-2 text-muted"><%= user.email %></h6>
+    </div>
+  </div>
+  <% } %>
+</div>
