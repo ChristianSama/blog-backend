@@ -4,7 +4,7 @@
     <p><%=post.author.name%> <%=post.author.lastname%></p>
   </a>
   <p class="text-muted mb-5"><%= post.createdAt.toLocaleString("ed-US", {year: "numeric", month: "short", day: "numeric"}) %></p>
-  <div class="d-flex justify-content-between mb-5">
+  <div class="d-flex justify-content-between mb-4">
     <h1><%= post.title %></h1>
     <% if (post.authorId === user.id) { %>
     <div class="d-flex align-items-center">
@@ -15,6 +15,6 @@
     </div>
     <% } %>
   </div>
-  <p><%= post.content %></p>
+  <p style="white-space: pre-line;"><span><%= post.content %></span></p>
 </div>
 <%- include("../partials/bottom"); %>

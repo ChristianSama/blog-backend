@@ -29,7 +29,9 @@
           </li>
           <% } %>
           <% if (user) { %>
-          <span class="navbar-text mx-3"><%= user.email %></span>
+          <a class="nav-link text-decoration-none mx-4" href="/users/<%=user.id%>">
+            <%= user.email %>
+          </a>
           <li class="nav-item">
             <form action="/auth/logout" method="post">
               <button class="btn btn-outline-secondary" type="submit">Logout</button>
