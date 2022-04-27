@@ -1,35 +1,68 @@
 <%- include("../partials/top"); %>
 <div style="width: 50rem; margin: 0 auto">
   <h1>Users</h1>
-  <div>
-    <a href="/users">All</a>
-    <button onclick="operation1()">Alphabetical order with uppercase lastnames</button>
-    <button onclick="operation2()">Starting with "a", "b", and "c"</button>
-    <button onclick="operation3()">Counting with "a", "b", and "c"</button>
+  <div class="filter-buttons">
+    <button class="btn-all-users btn btn-outline-dark active me-2 mb-3" data-bs-toggle="button" aria-pressed="true">All</button>
+    <button class="btn-alphabetical-users btn btn-outline-dark me-2 mb-3" data-bs-toggle="button">Alphabetical order & uppercase lastnames</button>
+    <button class="btn-abc-users btn btn-outline-dark me-2 mb-3" data-bs-toggle="button">Starting with "a", "b", and "c"</button>
+    <button class="btn-count-users btn btn-outline-dark me-2 mb-3" data-bs-toggle="button">Count with "a", "b", and "c"</button>
   </div>
   <%- include("./userList", users); %>
 </div>
 <%- include("../partials/bottom"); %>
 
 <script>
-  const operation1 = async () => {
+
+  const toggleButton = (target) => {
+    const buttons = document.querySelector(".filter-buttons");
+    for (let button of buttons.children) {
+      button.classList.remove("active");
+    }
+    target.classList.add("active");
+  }
+
+  const getAllUsers = async (target) => {
+    toggleButton(target);
+    const url = "http://localhost:3000/users/all";
+    const response = await fetch(url);
+    const userlist = await response.text();
+    document.getElementById("user-list").innerHTML = userlist
+  }
+
+  const getUsersAlphabetically = async (target) => {
+    toggleButton(target);
     const url = "http://localhost:3000/users/op1";
     const response = await fetch(url);
     const userlist = await response.text();
     document.getElementById("user-list").innerHTML = userlist
   };
 
-  const operation2 = async () => {
+  const getUsersABC = async (target) => {
+    toggleButton(target);
     const url = "http://localhost:3000/users/op2";
     const response = await fetch(url);
     const userlist = await response.text();
     document.getElementById("user-list").innerHTML = userlist
   }
 
-  const operation3 = async () => {
+  const countUsersABC = async (target) => {
+    toggleButton(target);
     const url = "http://localhost:3000/users/op3";
     const response = await fetch(url);
     const userlist = await response.text();
     document.getElementById("user-list").innerHTML = userlist
   }
+
+  const btnAllUsers = document.querySelector(".btn-all-users");
+  btnAllUsers.addEventListener("click", async (e) => await getAllUsers(e.target))
+  
+  const alphabeticalUsersBtn = document.querySelector(".btn-alphabetical-users");
+  alphabeticalUsersBtn.addEventListener("click", async (e) => getUsersAlphabetically(e.target))
+
+  const abcBtn = document.querySelector(".btn-abc-users");
+  abcBtn.addEventListener("click", async (e) => await getUsersABC(e.target))
+
+  const countBtn = document.querySelector(".btn-count-users");
+  countBtn.addEventListener("click", async (e) => await countUsersABC(e.target))
+
 </script>

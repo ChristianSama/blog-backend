@@ -14,17 +14,26 @@ export const getUser = async (req: Request, res: Response) => {
   res.render("users/user", {user: user})
 };
 
-export const operation1 = async (req: Request, res: Response) => {
+//Ajax
+export const getAllUsers = async (req: Request, res: Response) => {
+  const users = await usersServiceInstance.getUsers();
+  res.render("users/userList", {users: users})
+}
+
+//Ajax
+export const getUsersAlphabetically = async (req: Request, res: Response) => {
   const users = await usersServiceInstance.getUsersAlphabetically();
   res.render("users/userList", {users: users});
 };
 
-export const operation2 = async (req: Request, res: Response) => {
+//Ajax
+export const getUsersABC = async (req: Request, res: Response) => {
   const users = await usersServiceInstance.getUsersABC();
   res.render("users/userList", {users: users});
 };
 
-export const operation3 = async (req: Request, res: Response) => {
+//Ajax
+export const countUsersABC = async (req: Request, res: Response) => {
   const userCount = await usersServiceInstance.countUsersABC();
   res.render("users/userCount", {userCount: userCount});
 };
