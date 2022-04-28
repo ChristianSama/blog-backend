@@ -1,5 +1,7 @@
 import express from "express";
 import passport from "passport";
+import session from "express-session";
+import flash from "connect-flash";
 import * as passportConfig from "./config/passport";
 import usersRouter from "./routes/users";
 import postsRouter from "./routes/posts";
@@ -12,6 +14,8 @@ import "dotenv/config";
 const app = express();
 
 app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(session({cookie: {maxAge: 60000}, secret: process.env.COOKIE_SECRET as string}));
+app.use(flash());
 app.use(express.json());
 app.use(express.urlencoded( {extended: true}));
 app.use(methodOverride("_method"))
@@ -27,6 +31,11 @@ app.use(passportConfig.checkUser)
 app.get("/", (req, res) => {
   res.render("index");
 });
+
+app.get("/flash", (req, res) => {
+  req.flash("info", "asdfasdf");
+  res.redirect("/")
+})
 
 app.use("/auth", 
   authRouter
