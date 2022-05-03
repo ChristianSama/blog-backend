@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import IUserService from "../interfaces/users.interface";
+import { countUsersABC, filterUsersABC, sortAndCapitalizeLastName } from "./helpers";
 
 const prisma = new PrismaClient();
 
@@ -19,42 +20,16 @@ export default class UserService implements IUserService {
 
   async getUsersAlphabetically() {
     const users = await prisma.user.findMany();
-
-    users.sort((a, b) => a.name.localeCompare(b.name));
-    const result = users.map((user) => {
-      return {
-        id: user.id,
-        name: user.name,
-        lastname: user.lastname.toUpperCase(),
-        email: user.email
-      };
-    });
-    return result;
+    return sortAndCapitalizeLastName(users);
   }
 
   async getUsersABC() {
     const users = await prisma.user.findMany();
-    const result = users.filter((user) => (
-      user.name[0].toLowerCase() === "a" || 
-      user.name[0].toLowerCase() === "b" || 
-      user.name[0].toLowerCase() === "c" 
-    ));
-    result.sort((a, b) => a.name.localeCompare(b.name));
-    return result;
+    return filterUsersABC(users);
   }
 
   async countUsersABC() {
     const users = await prisma.user.findMany();
-
-    const aUsers = users.filter((user) => (user.name[0].toLowerCase() === "a"));
-    const bUsers = users.filter((user) => (user.name[0].toLowerCase() === "b"));
-    const cUsers = users.filter((user) => (user.name[0].toLowerCase() === "c"));
-
-    const result = {
-      a: aUsers.length,
-      b: bUsers.length,
-      c: cUsers.length,
-    };
-    return result;
+    return countUsersABC(users);
   }
 }
