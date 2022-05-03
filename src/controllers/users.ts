@@ -1,39 +1,45 @@
 import { Request, Response } from "express";
-import usersService from "../services/users.service";
+import UserService from "../services/users.service";
 
-const usersServiceInstance = new usersService();
+export default class UserController {
+  userService: UserService;
 
-export const getUsers = async (req: Request, res: Response) => {
-  const users = await usersServiceInstance.getUsers();
-  res.render("users/users", {users: users})
-};
+  constructor(userService: UserService) {
+    this.userService = userService;
+  }
 
-export const getUser = async (req: Request, res: Response) => {
-  const id = req.params.id;
-  const user = await usersServiceInstance.getUser(parseInt(id)); 
-  res.render("users/user", {user: user})
-};
+  getUsers = async (req: Request, res: Response) => {
+    const users = await this.userService.getUsers();
+    res.render("users/users", {users: users})
+  };
 
-//Ajax
-export const getAllUsers = async (req: Request, res: Response) => {
-  const users = await usersServiceInstance.getUsers();
-  res.render("users/userList", {users: users})
+  getUser = async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const user = await this.userService.getUser(parseInt(id)); 
+    res.render("users/user", {user: user})
+  };
+
+  //Ajax
+  getAllUsers = async (req: Request, res: Response) => {
+    const users = await this.userService.getUsers();
+    res.render("users/userList", {users: users})
+  }
+
+  //Ajax
+  getUsersAlphabetically = async (req: Request, res: Response) => {
+    const users = await this.userService.getUsersAlphabetically();
+    res.render("users/userList", {users: users});
+  };
+
+  //Ajax
+  getUsersABC = async (req: Request, res: Response) => {
+    const users = await this.userService.getUsersABC();
+    res.render("users/userList", {users: users});
+  };
+
+  //Ajax
+  countUsersABC = async (req: Request, res: Response) => {
+    const userCount = await this.userService.countUsersABC();
+    res.render("users/userCount", {userCount: userCount});
+  };
 }
-
-//Ajax
-export const getUsersAlphabetically = async (req: Request, res: Response) => {
-  const users = await usersServiceInstance.getUsersAlphabetically();
-  res.render("users/userList", {users: users});
-};
-
-//Ajax
-export const getUsersABC = async (req: Request, res: Response) => {
-  const users = await usersServiceInstance.getUsersABC();
-  res.render("users/userList", {users: users});
-};
-
-//Ajax
-export const countUsersABC = async (req: Request, res: Response) => {
-  const userCount = await usersServiceInstance.countUsersABC();
-  res.render("users/userCount", {userCount: userCount});
-};
