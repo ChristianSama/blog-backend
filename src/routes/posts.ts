@@ -1,7 +1,10 @@
 import express from 'express';
-import * as postsController from "../controllers/posts"
+import PostController from '../controllers/posts';
+import PostService from '../services/posts.service';
 
 const router = express.Router();
+const postService = new PostService();
+const postsController = new PostController(postService);
 
 //Get all posts
 router.get("/", postsController.getPosts);
