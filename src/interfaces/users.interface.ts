@@ -8,4 +8,7 @@ interface User {
 export default interface IUserService {
   getUsers(): Promise<User[]>;
   getUser(id: Number): Promise<User | null>;
+  getUsersAlphabetically(): Promise<User[]>;
+  getUsersABC(): Promise<User[]>;
+  countUsersABC(): Promise<Object>;
 }

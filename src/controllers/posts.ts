@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
-import PostService from "../services/posts.service";
+import IPostService from "../interfaces/posts.interface";
 import { User } from "@prisma/client";
 
 export default class PostController {
-  private postService: PostService;
+  private postService: IPostService;
 
-  constructor(postService: PostService) {
+  constructor(postService: IPostService) {
     this.postService = postService;
   }
 
@@ -43,7 +43,7 @@ export default class PostController {
     const { title, content } = req.body;
     const post = await this.postService.getPost(parseInt(id));
     const user = req.user as User;
-    if (post?.author.id === user.id) {
+    if (post?.authorId === user.id) {
       await this.postService.editPost(parseInt(id), title, content);
     }
     res.redirect("/posts/" + id);
@@ -53,7 +53,7 @@ export default class PostController {
     const { id } = req.params;
     const post = await this.postService.getPost(parseInt(id));
     const user = req.user as User;
-    if (post?.author.id === user.id) {
+    if (post?.authorId === user.id) {
       await this.postService.deletePost(parseInt(id));
     }
     res.redirect("/posts");
