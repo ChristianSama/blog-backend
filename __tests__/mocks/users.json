@@ -1,0 +1,86 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "c.tentaculos@gmail.com",
+      "password": "$argon2i$v=19$m=4096,t=3,p=1$zDRs7Rkq79OgcAac+ZFRiQ$cDIS9SLLnrUGtj78Coih4taascAiMNDJxhDkVY22kVE",
+      "name": "Calamardo",
+      "lastname": "Tentaculos"
+    },
+    {
+      "id": 2,
+      "email": "a.mejillas@gmail.com",
+      "password": "$argon2i$v=19$m=4096,t=3,p=1$xVQmM0Jt4FHHXbtWZmGuXg$6qgTDNEYhQYHFQLweE04I1TUFzHyvusFwmp0VHsSUi0",
+      "name": "Arenita",
+      "lastname": "Mejillas"
+    },
+    {
+      "id": 3,
+      "email": "b.esponja@gmail.com",
+      "password": "$argon2i$v=19$m=4096,t=3,p=1$TT6oZBGbKm01Rm5ynX/XMA$XjqTIccV7hSrhg6l3KYCCWgic21TsER8iHXRJ6Wl3nw",
+      "name": "Bob",
+      "lastname": "Esponja"
+    },
+    {
+      "id": 4,
+      "email": "p.estrella@gmail.com",
+      "password": "$argon2i$v=19$m=4096,t=3,p=1$qI7R3hNgYFeP6QbuqGx4nw$0iL68BbVNsTSdL4aJ5CH0yX+H7wU8Qw3KXxLIK+tVUk",
+      "name": "Patricio",
+      "lastname": "Estrella"
+    }
+  ],
+  "usersSortedAndCap": [
+    {
+      "id": 2,
+      "email": "a.mejillas@gmail.com",
+      "name": "Arenita",
+      "lastname": "MEJILLAS"
+    },
+    {
+      "id": 3,
+      "email": "b.esponja@gmail.com",
+      "name": "Bob",
+      "lastname": "ESPONJA"
+    },
+    {
+      "id": 1,
+      "email": "c.tentaculos@gmail.com",
+      "name": "Calamardo",
+      "lastname": "TENTACULOS"
+    },
+    {
+      "id": 4,
+      "email": "p.estrella@gmail.com",
+      "name": "Patricio",
+      "lastname": "ESTRELLA"
+    }
+  ],
+  "usersABC": [
+    {
+      "id": 2,
+      "email": "a.mejillas@gmail.com",
+      "password": "$argon2i$v=19$m=4096,t=3,p=1$xVQmM0Jt4FHHXbtWZmGuXg$6qgTDNEYhQYHFQLweE04I1TUFzHyvusFwmp0VHsSUi0",
+      "name": "Arenita",
+      "lastname": "Mejillas"
+    },
+    {
+      "id": 3,
+      "email": "b.esponja@gmail.com",
+      "password": "$argon2i$v=19$m=4096,t=3,p=1$TT6oZBGbKm01Rm5ynX/XMA$XjqTIccV7hSrhg6l3KYCCWgic21TsER8iHXRJ6Wl3nw",
+      "name": "Bob",
+      "lastname": "Esponja"
+    },
+    {
+      "id": 1,
+      "email": "c.tentaculos@gmail.com",
+      "password": "$argon2i$v=19$m=4096,t=3,p=1$zDRs7Rkq79OgcAac+ZFRiQ$cDIS9SLLnrUGtj78Coih4taascAiMNDJxhDkVY22kVE",
+      "name": "Calamardo",
+      "lastname": "Tentaculos"
+    }
+  ],
+  "countABC": {
+    "a": 1,
+    "b": 1,
+    "c": 1
+  }
+}

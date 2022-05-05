@@ -1,9 +1,9 @@
 import { User } from "@prisma/client";
 
 export const sortAndCapitalizeLastName = (users: User[]) => {
-  users.sort((a, b) => a.name.localeCompare(b.name));
+  const sortedUsers = [...users].sort((a, b) => a.name.localeCompare(b.name));
 
-  const result = users.map((user) => {
+  const result = sortedUsers.map((user) => {
     return {
       id: user.id,
       name: user.name,
