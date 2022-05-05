@@ -1,6 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 import IUserService from "../interfaces/users.interface";
-import { countUsersABC, filterUsersABC, sortAndCapitalizeLastName } from "./helpers";
+import {
+  countUsersABC,
+  filterUsersABC,
+  sortAndCapitalizeLastName,
+} from "./helpers";
 
 const prisma = new PrismaClient();
 

@@ -2,23 +2,21 @@ import { Request, Response } from "express";
 import PostService from "../services/posts.service";
 import { User } from "@prisma/client";
 
-const postServiceInstance = new PostService();
-
 export default class PostController {
-  postService: PostService;
+  private postService: PostService;
 
   constructor(postService: PostService) {
-    this.postService = postService
+    this.postService = postService;
   }
 
   getPosts = async (req: Request, res: Response) => {
-    const posts = await postServiceInstance.getPosts();
+    const posts = await this.postService.getPosts();
     res.render("posts/posts", { posts: posts });
   };
 
   getPost = async (req: Request, res: Response) => {
     const id = req.params.id;
-    const post = await postServiceInstance.getPost(parseInt(id));
+    const post = await this.postService.getPost(parseInt(id));
     res.render("posts/post", { post: post });
   };
 
@@ -30,35 +28,34 @@ export default class PostController {
     const { title, content } = req.body;
     const user = req.user as User;
     const authorEmail = user.email;
-    const post = await postServiceInstance.createPost(
-      title,
-      content,
-      authorEmail
-    );
+    const post = await this.postService.createPost(title, content, authorEmail);
     res.redirect("/posts/" + post.id);
   };
 
   getEditForm = async (req: Request, res: Response) => {
     const { id } = req.params;
-    const post = await postServiceInstance.getPost(parseInt(id));
-    res.render("posts/edit", {post: post});
+    const post = await this.postService.getPost(parseInt(id));
+    res.render("posts/edit", { post: post });
   };
 
   editPost = async (req: Request, res: Response) => {
     const { id } = req.params;
     const { title, content } = req.body;
-    const post = await postServiceInstance.editPost(parseInt(id), title, content);
-    res.redirect("/posts/" + id)
+    const post = await this.postService.getPost(parseInt(id));
+    const user = req.user as User;
+    if (post?.author.id === user.id) {
+      await this.postService.editPost(parseInt(id), title, content);
+    }
+    res.redirect("/posts/" + id);
   };
 
   deletePost = async (req: Request, res: Response) => {
     const { id } = req.params;
-    const post = await postServiceInstance.getPost(parseInt(id));
+    const post = await this.postService.getPost(parseInt(id));
     const user = req.user as User;
     if (post?.author.id === user.id) {
-      await postServiceInstance.deletePost(parseInt(id));
+      await this.postService.deletePost(parseInt(id));
     }
     res.redirect("/posts");
   };
 }
-

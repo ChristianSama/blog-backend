@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import IPostService from "../interfaces/posts.interface"
+import IPostService from "../interfaces/posts.interface";
 
 const prisma = new PrismaClient();
 
@@ -12,14 +12,16 @@ export default class PostService implements IPostService {
   async getPost(id: Number) {
     const post = await prisma.post.findUnique({
       where: { id: Number(id) },
-      include: { author: {
-        select: {
-          id: true,
-          email: true,
-          name: true,
-          lastname: true
-        }
-      } }
+      include: {
+        author: {
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            lastname: true,
+          },
+        },
+      },
     });
     return post;
   }
@@ -50,6 +52,6 @@ export default class PostService implements IPostService {
     const post = await prisma.post.delete({
       where: { id: Number(id) },
     });
-    return post
+    return post;
   }
 }
