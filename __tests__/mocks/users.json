@@ -29,6 +29,62 @@
       "lastname": "Estrella"
     }
   ],
+  "usersSortedByName": [
+    {
+      "id": 2,
+      "email": "a.mejillas@gmail.com",
+      "password": "$argon2i$v=19$m=4096,t=3,p=1$xVQmM0Jt4FHHXbtWZmGuXg$6qgTDNEYhQYHFQLweE04I1TUFzHyvusFwmp0VHsSUi0",
+      "name": "Arenita",
+      "lastname": "Mejillas"
+    },
+    {
+      "id": 3,
+      "email": "b.esponja@gmail.com",
+      "password": "$argon2i$v=19$m=4096,t=3,p=1$TT6oZBGbKm01Rm5ynX/XMA$XjqTIccV7hSrhg6l3KYCCWgic21TsER8iHXRJ6Wl3nw",
+      "name": "Bob",
+      "lastname": "Esponja"
+    },
+    {
+      "id": 1,
+      "email": "c.tentaculos@gmail.com",
+      "password": "$argon2i$v=19$m=4096,t=3,p=1$zDRs7Rkq79OgcAac+ZFRiQ$cDIS9SLLnrUGtj78Coih4taascAiMNDJxhDkVY22kVE",
+      "name": "Calamardo",
+      "lastname": "Tentaculos"
+    },
+    {
+      "id": 4,
+      "email": "p.estrella@gmail.com",
+      "password": "$argon2i$v=19$m=4096,t=3,p=1$qI7R3hNgYFeP6QbuqGx4nw$0iL68BbVNsTSdL4aJ5CH0yX+H7wU8Qw3KXxLIK+tVUk",
+      "name": "Patricio",
+      "lastname": "Estrella"
+    }
+  ],
+  "usersCap": [
+    {
+      "id": 1,
+      "email": "c.tentaculos@gmail.com",
+      "name": "Calamardo",
+      "lastname": "TENTACULOS"
+    },
+    {
+      "id": 2,
+      "email": "a.mejillas@gmail.com",
+      "name": "Arenita",
+      "lastname": "MEJILLAS"
+    },
+    {
+      "id": 3,
+      "email": "b.esponja@gmail.com",
+      "name": "Bob",
+      "lastname": "ESPONJA"
+    },
+    {
+      "id": 4,
+      "email": "p.estrella@gmail.com",
+      "name": "Patricio",
+      "lastname": "ESTRELLA"
+    }
+  ],
   "usersSortedAndCap": [
     {
       "id": 2,
@@ -76,6 +132,29 @@
       "password": "$argon2i$v=19$m=4096,t=3,p=1$zDRs7Rkq79OgcAac+ZFRiQ$cDIS9SLLnrUGtj78Coih4taascAiMNDJxhDkVY22kVE",
       "name": "Calamardo",
       "lastname": "Tentaculos"
+    }
+  ],
+  "usersWithoutABC": [
+    {
+      "id": 5,
+      "email": "d.cangrejo@gmail.com",
+      "password": "$argon2i$v=19$m=4096,t=3,p=1$xVQmM0Jt4FHHXbtWZmGuXg$6qgTDNEYhQYHFQLweE04I1TUFzHyvusFwmp0VHsSUi0",
+      "name": "Eugenio",
+      "lastname": "Cangrejo"
+    },
+    {
+      "id": 6,
+      "email": "l.langosta@gmail.com",
+      "password": "$argon2i$v=19$m=4096,t=3,p=1$TT6oZBGbKm01Rm5ynX/XMA$XjqTIccV7hSrhg6l3KYCCWgic21TsER8iHXRJ6Wl3nw",
+      "name": "Larry",
+      "lastname": "Langosta"
+    },
+    {
+      "id": 4,
+      "email": "p.estrella@gmail.com",
+      "password": "$argon2i$v=19$m=4096,t=3,p=1$zDRs7Rkq79OgcAac+ZFRiQ$cDIS9SLLnrUGtj78Coih4taascAiMNDJxhDkVY22kVE",
+      "name": "Patricio",
+      "lastname": "Estrella"
     }
   ],
   "countABC": {
