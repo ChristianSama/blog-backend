@@ -21,13 +21,15 @@ export const postLogin = (req: Request, res: Response, next: NextFunction) => {
     "login",
     {
       session: false,
-      failureRedirect: "/auth/login",
-      failureMessage: true,
     },
     (err, user, info) => {
-      console.log(req.flash("error"));
-      // Check for errors
-      if (err) throw new Error(err);
+      //Pass flash message
+      req.flash("info", info.message);
+
+      // If authentication failed redirect to login page
+      if (err || !user) {
+        return res.redirect("/auth/login");
+      }
       // Generate token
       const payload = { id: user.id };
       const token = jwt.sign(payload, process.env.JWT_SECRET as string, {

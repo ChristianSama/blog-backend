@@ -1,8 +1,8 @@
 import express from "express";
 import passport from "passport";
 import session from "express-session";
-import flash from "connect-flash";
 import * as passportConfig from "./config/passport";
+import flash from "express-flash";
 import usersRouter from "./routes/users";
 import postsRouter from "./routes/posts";
 import authRouter from "./routes/auth";
@@ -32,11 +32,6 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.get("/flash", (req, res) => {
-  req.flash("info", "asdfasdf");
-  res.redirect("/")
-})
-
 app.use("/auth", 
   authRouter
 );
@@ -51,7 +46,4 @@ app.use("/posts",
   postsRouter
 );
 
-//Start Server
-const server = app.listen(process.env.PORT, () => {
-  console.log("Server listening on port 3000");
-});
+export default app;
