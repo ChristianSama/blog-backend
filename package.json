@@ -4,9 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest -i",
+    "test": "dotenv -e .env.test jest -i --testTimeout=10000 --detectOpenHandles",
+    "pretest": "dotenv -e .env.test npx prisma migrate reset",
     "dev": "ts-node-dev src/server.ts",
     "start": "ts-node src/server.ts"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   },
   "keywords": [],
   "author": "",
