@@ -8,8 +8,13 @@ export const getSignup = (req: Request, res: Response) => {
 };
 
 export const postSignup = (req: Request, res: Response, next: NextFunction) => {
-  passport.authenticate("signup", { session: false })(req, res, next);
-  res.redirect("/");
+  passport.authenticate("signup", { session: false }, (err, user, info) => {
+    if (err || !user) {
+      req.flash("info", info.message);
+      return res.redirect("/auth/signup");
+    }
+    return res.redirect(201, "/auth/login");
+  })(req, res, next);
 };
 
 export const getLogin = (req: Request, res: Response) => {
@@ -42,8 +47,7 @@ export const postLogin = (req: Request, res: Response, next: NextFunction) => {
           secure: true, //if using https
           signed: true, //to make sure client can't modify the cookie
         })
-        .status(201)
-        .redirect("/");
+        .redirect(201, "/");
     }
   )(req, res, next);
 };

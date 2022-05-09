@@ -1,23 +1,28 @@
 <%- include("../partials/top"); %>
 
 <form action="/auth/signup" method="POST">
-  <label>
-    Name:
-    <input type="text" name="name">
-  </label>
-  <label>
-    Last Name:
-    <input type="text" name="lastname">
-  </label>
-  <label>
-    Email:
-    <input type="text" name="email">
-  </label>
-  <label>
-    Password:
-    <input type="text" name="password">
-  </label>
-  <button type="submit">Sign Up</button>
+  <div class="d-flex flex-column justify-content-center" style="width: 30rem; margin: 0 auto;">
+    <h1 class="mb-4">Sign Up</h1>
+    <div style="color: red"><%= messages.info %></div>
+      <label class="form-label mb-4">
+        Name:
+        <input type="text" name="name" class="form-control">
+      </label>
+      <label class="form-label mb-4">
+        Last Name:
+        <input type="text" name="lastname" class="form-control">
+      </label>
+      <label class="form-label mb-4">
+        Email:
+        <input type="email" name="email" class="form-control">
+      </label>
+      <label class="form-label mb-4">
+        Password:
+        <input type="text" name="password" class="form-control">
+      </label>
+      <button type="submit" class="btn btn-secondary mb-4">Sign Up</button>
+      <div>Already registered? <a href="/auth/login">Login</a></div>
+  </div>
 </form>
 
 <%- include("../partials/bottom"); %>

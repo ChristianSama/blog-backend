@@ -35,7 +35,11 @@ export default class PostController {
   getEditForm = async (req: Request, res: Response) => {
     const { id } = req.params;
     const post = await this.postService.getPost(parseInt(id));
-    res.render("posts/edit", { post: post });
+    const user = req.user as User;
+    if (post?.authorId === user.id) {
+      res.render("posts/edit", { post: post });
+    }
+    res.redirect("/posts")
   };
 
   editPost = async (req: Request, res: Response) => {

@@ -24,7 +24,7 @@ export const init = (passport: any) => {
           const existsEmail = await prisma.user.findFirst({ where: { email } });
           if (existsEmail)
             return done(null, false, {
-              message: "Email already exists.",
+              message: "Email already exists",
             });
 
           // Create the user
@@ -36,7 +36,9 @@ export const init = (passport: any) => {
               password: await argon2.hash(password),
             },
           });
-          return done(null, user);
+          return done(null, user, {
+            message: "User created successfully"
+          });
         } catch (err) {
           return done(err);
         }
@@ -115,7 +117,6 @@ export const init = (passport: any) => {
 export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
   const user = req.user
   if (user) {
-    console.log(user);
     next();
     return;
   }
@@ -125,7 +126,6 @@ export const isAuthenticated = (req: Request, res: Response, next: NextFunction)
 export const isNotAuthenticated = (req: Request, res: Response, next: NextFunction) => {
   const user = req.user
   if (user) {
-    console.log(user);
     res.redirect("/");
     return;
   }
