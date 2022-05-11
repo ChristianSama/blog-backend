@@ -1,4 +1,3 @@
-import { session } from "passport";
 import supertest from "supertest";
 import app from "../src/app";
 const request = supertest.agent(app);
@@ -10,14 +9,12 @@ describe("POST /auth/login", () => {
         email: "jperez@gmail.com",
         password: "123",
       };
-      const res = await request
-        .post("/auth/login")
-        .send(body)
-      expect(res.statusCode).toEqual(201);
+      const res = await request.post("/auth/login").send(body);
+      expect(res.statusCode).toEqual(302);
       expect(res.header["location"]).toEqual("/");
       const loggedIn = res.header["set-cookie"].some((cookie: string) => {
         return cookie.substring(0, 8) == "jwtToken";
-      })
+      });
       expect(loggedIn).toBe(true);
     });
   });
@@ -27,42 +24,63 @@ describe("POST /auth/login", () => {
         email: "nobody@gmail.com",
         password: "123",
       };
-      const res = await request
-        .post("/auth/login")
-        .send(body)
+      const res = await request.post("/auth/login").send(body);
       expect(res.statusCode).toEqual(302);
       expect(res.header["location"]).toEqual("/auth/login");
-    })
-  })
+      const loggedIn = res.header["set-cookie"].some((cookie: string) => {
+        return cookie.substring(0, 8) == "jwtToken";
+      });
+      expect(loggedIn).toBe(false);
+    });
+  });
   describe("When given an incorrect password", () => {
     it("should redirect to login page with status 302", async () => {
       const body = {
         email: "jperez@gmail.com",
         password: "incorrect",
       };
-      const res = await request
-        .post("/auth/login")
-        .send(body)
+      const res = await request.post("/auth/login").send(body);
       expect(res.statusCode).toEqual(302);
       expect(res.header["location"]).toEqual("/auth/login");
-    })
-  })
+      const loggedIn = res.header["set-cookie"].some((cookie: string) => {
+        return cookie.substring(0, 8) == "jwtToken";
+      });
+      expect(loggedIn).toBe(false);
+    });
+  });
 });
 
 describe("POST /auth/signup", () => {
   describe("When given valid a name, lastname, email and password", () => {
-    it("should register the user and redirect to login page", async () => {
+    it("should register the user and the user should be able to login", async () => {
       const body = {
         name: "Ignacio",
         lastname: "Varga",
         email: "ivargas@gmail.com",
-        password: "incorrect"
+        password: "password",
       };
-      const res = await request
-        .post("/auth/signup")
-        .send(body)
-      expect(res.statusCode).toEqual(201);
+      let res = await request.post("/auth/signup").send(body);
+      expect(res.statusCode).toEqual(302);
       expect(res.header["location"]).toEqual("/auth/login");
-    })
-  })
-})
+
+      res = await request.post("/auth/login").send({email: body.email, password: body.password})
+      const loggedIn = res.header["set-cookie"].some((cookie: string) => {
+        return cookie.substring(0, 8) == "jwtToken";
+      });
+      expect(loggedIn).toBe(true);
+    });
+  });
+  describe("When given an existing email", () => {
+    it("should redirect to signup page with status 302", async () => {
+      const body = {
+        name: "Patricio",
+        lastname: "Estrella",
+        email: "pestrella@gmail.com",
+        password: "1234",
+      };
+      let res = await request.post("/auth/signup").send(body);
+      expect(res.statusCode).toEqual(302);
+      expect(res.header["location"]).toEqual("/auth/signup");
+    });
+  });
+});

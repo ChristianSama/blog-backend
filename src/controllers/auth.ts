@@ -8,12 +8,13 @@ export const getSignup = (req: Request, res: Response) => {
 };
 
 export const postSignup = (req: Request, res: Response, next: NextFunction) => {
+  
   passport.authenticate("signup", { session: false }, (err, user, info) => {
     if (err || !user) {
       req.flash("info", info.message);
       return res.redirect("/auth/signup");
     }
-    return res.redirect(201, "/auth/login");
+    return res.redirect("/auth/login");
   })(req, res, next);
 };
 
@@ -42,12 +43,12 @@ export const postLogin = (req: Request, res: Response, next: NextFunction) => {
       });
       return res
         .cookie("jwtToken", token, {
-          httpOnly: true, //not accesible through document.cookie
+          httpOnly: true, //not accesible through document.cookie TODO: handle httpOnly
           maxAge: 60 * 60 * 1000, //1 hour
           secure: true, //if using https
           signed: true, //to make sure client can't modify the cookie
         })
-        .redirect(201, "/");
+        .redirect("/");
     }
   )(req, res, next);
 };

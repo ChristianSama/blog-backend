@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "dotenv -e .env.test jest -i --testTimeout=10000 --detectOpenHandles",
+    "test": "dotenv -e .env.test jest -i --testTimeout=10000",
     "pretest": "dotenv -e .env.test npx prisma migrate reset",
-    "dev": "ts-node-dev src/server.ts",
+    "dev": "dotenv -e .env.development ts-node-dev src/server.ts",
     "start": "ts-node src/server.ts"
   },
   "prisma": {

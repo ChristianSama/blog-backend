@@ -18,7 +18,7 @@ app.use(session({
   cookie: {maxAge: 60000},
   secret: process.env.COOKIE_SECRET as string,
   saveUninitialized: true,
-  resave: true}));
+  resave: false}));
 
 app.use(flash());
 app.use(express.json());
