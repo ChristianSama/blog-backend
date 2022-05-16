@@ -1,8 +1,8 @@
-import {capitalizeLastnames, countUsersABC, filterUsersABC, sortAndCapitalizeLastName, sortUsersByName} from "../src/services/helpers";
+import {capitalizeLastnames, countUsersABC, filterUsersABC, sortAndCapitalizeLastName, sortUsersByName} from "../../src/services/helpers";
 import fs from 'fs'
 import path from 'path'
 
-let mocks = JSON.parse(fs.readFileSync(path.resolve(__dirname, "./mocks/users.json")).toString())
+let mocks = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../mocks/users.json")).toString())
 
 describe("sortUsersByName()", () => {
   describe("When passed an array of users", () => {
