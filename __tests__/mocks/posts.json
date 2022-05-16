@@ -1,0 +1,29 @@
+[
+    {
+      "id": 7,
+      "createdAt": "2022-04-24T22:15:56.468Z",
+      "updatedAt": "2022-04-24T22:15:56.469Z",
+      "title": "test post 2",
+      "content": "qwerqwerqwer qwerqwe\r\nqwerq\r\nqwer",
+      "published": false,
+      "authorId": 1
+    },
+    {
+      "id": 8,
+      "createdAt": "2022-04-25T00:59:25.540Z",
+      "updatedAt": "2022-04-25T00:59:25.541Z",
+      "title": "test 3asdf",
+      "content": "asdfasdfasdzxcvzxcvzxvc\r\nzxcv\r\nzxcv\r\nzxcv",
+      "published": false,
+      "authorId": 2
+    },
+    {
+      "id": 12,
+      "createdAt": "2022-05-05T20:29:14.509Z",
+      "updatedAt": "2022-05-05T20:29:14.510Z",
+      "title": "test 4",
+      "content": "asdfasdf",
+      "published": false,
+      "authorId": 3
+    }
+]
