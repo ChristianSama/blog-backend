@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import passport from "passport";
 import session from "express-session";
 import * as passportConfig from "./config/passport";
@@ -50,5 +50,20 @@ app.use("/posts",
   passport.authenticate("jwt", { session: false }),
   postsRouter
 );
+
+//Error Handler
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  if (err.message === "Not Found") {
+    res.status(404).send("Page not found");
+  }
+  else {
+    res.status(400).send(err.message);
+  }
+});
+
+//Unknown route handler
+app.get('*', (req, res) => {
+  res.status(404).send('what???');
+});
 
 export default app;

@@ -45,7 +45,7 @@ export const postLogin = (req: Request, res: Response, next: NextFunction) => {
         .cookie("jwtToken", token, {
           httpOnly: true, //not accesible through document.cookie TODO: handle httpOnly
           maxAge: 60 * 60 * 1000, //1 hour
-          secure: true, //if using https
+          // secure: true, //if using https
           signed: true, //to make sure client can't modify the cookie
         })
         .redirect("/");
