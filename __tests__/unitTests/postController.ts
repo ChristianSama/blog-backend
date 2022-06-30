@@ -1,11 +1,12 @@
+jest.mock("../../src/services/posts.service");
+
 import { Request, Response } from "express";
 import PostController from "../../src/controllers/posts";
-import PostService from "../mocks/postsServiceMock";
+import PostService from "../../src/services/posts.service";
 
-// import PostService {getPosts} from "../../src/services/postService";
-// jest.mock("../../src/services/postService");
+const postService = new PostService();
 
-const postController = new PostController(new PostService());
+const postController = new PostController(postService);
 
 describe("getPosts()", () => {
   it("should retrieve all posts and render posts view", async () => {
@@ -15,13 +16,15 @@ describe("getPosts()", () => {
     } as unknown as Response;
 
     await postController.getPosts(req, res);
+
+    expect(postService.getPosts).toHaveBeenCalled();
     expect(res.render).toHaveBeenCalledWith("posts/posts", expect.anything());
   });
 });
 
 describe("getPost()", () => {
   it("should retrieve a specific post and render the post view", async () => {
-    const req = { params: { id: 1 } } as unknown as Request;
+    const req = { params: { id: 7 } } as unknown as Request;
     const res = {
       render: jest.fn(),
     } as unknown as Response;
@@ -88,6 +91,47 @@ describe("createPost()", () => {
   });
 });
 
+
+describe("editPost()", () => {
+  describe("if the post belongs to the logged user", () => {
+    it("should edit the post and redirect to the post view", async () => {
+      const req = {
+        params: { id: 1 },
+        user: {
+          id: 1,
+          email: "c.tentaculos@gmail.com",
+          name: "Calamardo",
+          lastname: "Tentaculos",
+        },
+        body: {
+          title: "Test Title",
+          content:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat elit nec tristique suscipit. Aenean sit amet eros ipsum. Integer placerat placerat laoreet. Etiam ut orci eu eros maximus commodo eu eget diam. Ut at urna vitae nulla hendrerit vestibulum. Curabitur malesuada tempus ornare. Praesent sit amet sagittis velit, quis egestas orci. Etiam quis nisl ac massa dictum facilisis sit amet vitae lectus. Mauris eu rhoncus erat. Pellentesque varius, ligula vitae blandit sodales, tellus leo consequat est, a mattis erat urna eu elit. Cras turpis mauris, molestie vel nisl et, euismod fringilla erat. Vivamus id dolor libero.",
+        },
+      } as unknown as Request;
+
+      const res = {
+        redirect: jest.fn()
+      } as unknown as Response;
+
+      await postController.editPost(req, res)
+      expect(postService.editPost).toHaveBeenCalled();
+      expect(res.redirect).toHaveBeenCalled();
+    });
+  });
+  describe("if the given id is NaN", () => {
+    it("should throw error - Not Found", async () => {
+      const req = { params: { id: "asdf" } } as unknown as Request;
+      const res = {} as unknown as Response;
+
+      await expect(postController.editPost(req, res)).rejects.toThrow(
+        "Not Found"
+      );
+    })
+  })
+  // describe("if the given id is ")
+});
+
 describe("getEditForm()", () => {
   describe("if the post belongs to the user", () => {
     it("should render the edit page for that post", async () => {
@@ -139,39 +183,16 @@ describe("getEditForm()", () => {
       );
     });
   });
-  // describe("if post with given id does not exist", () => {
-  //   it("should throw error Not Found", async () => {
-  //     const req = { params: { id: "999" } } as unknown as Request;
-  //     const res = {} as unknown as Response;
+  describe("if post with given id does not exist", () => {
+    it("should throw error Not Found", async () => {
+      postService.getPost = jest.fn().mockResolvedValueOnce(null);
 
-  //     await expect(postController.getEditForm(req, res)).rejects.toThrow(
-  //       "Not Found"
-  //     );
-  //   })
-  // })
-});
-
-describe("editPost()", () => {
-  describe("if the post belongs to the logged user", () => {
-    it("should edit the post and redirect to the post view", async () => {
-      const req = {
-        user: {
-          id: 1,
-          email: "c.tentaculos@gmail.com",
-          name: "Calamardo",
-          lastname: "Tentaculos",
-        },
-        body: {
-          title: "Test Title",
-          content:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat elit nec tristique suscipit. Aenean sit amet eros ipsum. Integer placerat placerat laoreet. Etiam ut orci eu eros maximus commodo eu eget diam. Ut at urna vitae nulla hendrerit vestibulum. Curabitur malesuada tempus ornare. Praesent sit amet sagittis velit, quis egestas orci. Etiam quis nisl ac massa dictum facilisis sit amet vitae lectus. Mauris eu rhoncus erat. Pellentesque varius, ligula vitae blandit sodales, tellus leo consequat est, a mattis erat urna eu elit. Cras turpis mauris, molestie vel nisl et, euismod fringilla erat. Vivamus id dolor libero.",
-        },
-        params: { id: "1" },
-      } as unknown as Request;
-
+      const req = { params: { id: "999" } } as unknown as Request;
       const res = {} as unknown as Response;
 
-      await postController.editPost(req, res)
-    });
-  });
+      await expect(postController.getEditForm(req, res)).rejects.toThrow(
+        "Not Found"
+      );
+    })
+  })
 });
