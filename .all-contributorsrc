@@ -1,0 +1,24 @@
+{
+  "projectName": "blog-backend",
+  "projectOwner": "ChristianSama",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "ChristianSama",
+      "name": "Christian Samaniego",
+      "avatar_url": "https://avatars.githubusercontent.com/u/43491324?v=4",
+      "profile": "https://github.com/ChristianSama",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
