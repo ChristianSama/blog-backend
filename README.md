@@ -11,7 +11,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/ChristianSama"><img src="https://avatars.githubusercontent.com/u/43491324?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Christian Samaniego</b></sub></a><br /><a href="https://github.com/ChristianSama/blog-backend/commits?author=ChristianSama" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/ChristianSama"><img src="https://avatars.githubusercontent.com/u/43491324?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Christian Samaniego</b></sub></a><br /><a href="https://github.com/ChristianSama/blog-backend/commits?author=ChristianSama" title="Code">💻</a> <a href="https://github.com/ChristianSama/blog-backend/commits?author=ChristianSama" title="Documentation">📖</a></td>
   </tr>
 </table>
 
